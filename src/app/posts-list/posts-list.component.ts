@@ -1,17 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Post } from '../post';
 
 @Component({
-  selector: 'app-posts-list',
-  templateUrl: './posts-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+	selector: 'app-posts-list',
+	templateUrl: './posts-list.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PostsListComponent {
+export class PostsListComponent implements OnInit {
+	@Input() posts: Post[];
 
-  @Input() posts: Post[];
-
-  /*=========================================================================|
+	/*=========================================================================|
   | Red Path                                                                 |
   |==========================================================================|
   | Maneja el evento del componente PostPreviewComponent que indica la       |
@@ -21,7 +21,19 @@ export class PostsListComponent {
   | parámetro el identificador del autor.                                    |
   |=========================================================================*/
 
-  /*=========================================================================|
+/* path: 'posts/:postId',
+      component: PostDetailsComponent */
+	constructor(public router: Router) {}  // ActivatedRoute) { }
+
+	ngOnInit(): void {
+		// Suscripción manual al observable
+    //this._route.subscribe((params: Params) => { });
+	}
+  getPost(postId: number): void { 
+    console.log(`Soy el padre y la ruta será /posts/${postId}`);
+    this.router.navigate(['/posts', postId]);
+  }
+	/*=========================================================================|
   | Green Path                                                               |
   |==========================================================================|
   | Maneja el evento del componente PostPreviewComponent que indica la       |
@@ -30,5 +42,4 @@ export class PostsListComponent {
   | app. La ruta a navegar es '/posts', pasando como parámetro el            |
   | identificador del post.                                                  |
   |=========================================================================*/
-
 }

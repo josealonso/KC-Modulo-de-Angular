@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Post } from '../post';
+import { User } from '../user';
 
 @Component({
   selector: 'app-post-preview',
@@ -8,9 +9,10 @@ import { Post } from '../post';
   styleUrls: ['./post-preview.component.css']
 })
 export class PostPreviewComponent {
-
-  @Input() post: Post;
-
+ 
+  // Se expone el atributo para que 
+  // un compon. padre pueda enlazar datos al hijo 
+  @Input() post: Post;    
   /*=========================================================================|
   | Red Path                                                                 |
   |==========================================================================|
@@ -30,6 +32,13 @@ export class PostPreviewComponent {
   | dicho clic se realiza en el template de este componente, necesitas,      |
   | además, un manejador para el mismo.                                      |
   |=========================================================================*/
+
+  @Output() pulsacionEnResumen = new EventEmitter<Post>(); 
+  
+  verDetalle(post: Post): void {
+    this.pulsacionEnResumen.emit(post.id);
+    console.log('Emitted an event with:', post.id);
+  }
 
   plainTextToHtml(text: string): string {
     return text ? `<p>${text.replace(/\n/gi, '</p><p>')}</p>` : '';

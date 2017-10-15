@@ -13,4 +13,13 @@
 | en él para notificar los clics sobre los posts.                          |
 |========================================================================-->
 
-<app-post-preview *ngFor="let post of posts" [post]="post"></app-post-preview>
+<app-post-preview *ngFor="let post of posts" [post]="post"
+(pulsacionEnResumen)="getPost($event)"> <!-- [routerLink]="['/posts', 2]"> -->
+</app-post-preview> 
+<!-- (pulsacionEnResumen)=[routerLink]="['posts', 2]"> -->
+
+<!-- [post]="pulsacionEnResumen($event)"  -->
+  <!-- <div class="post" (click)="verDetalle">  @Output() pulsacionEnResumen = new EventEmitter<Post>(); -->
+
+
+<!-- El valor de un atributo en html5 DEBE ser una cadena -->
