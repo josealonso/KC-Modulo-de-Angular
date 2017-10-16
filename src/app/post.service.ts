@@ -7,14 +7,15 @@ import 'rxjs/add/operator/map';
 import { environment } from '../environments/environment';
 import { Post } from './post';
 
+import * as moment from 'moment';
+import 'moment/locale/es';
+
 @Injectable()
 export class PostService {
+	constructor(private _http: HttpClient) {}
 
-  constructor(private _http: HttpClient) { }
-
-  getPosts(): Observable<Post[]> {
-
-    /*=========================================================================|
+	getPosts(): Observable<Post[]> {
+		/*=========================================================================|
     | Pink Path                                                                |
     |==========================================================================|
     | Pide al servidor que te retorne los posts ordenados de más reciente a    |
@@ -32,18 +33,15 @@ export class PostService {
     | Una pista más, por si acaso: HttpParams.                                 |
     |=========================================================================*/
 
-    const options = {
-      params: new HttpParams()
-        .set('_sort', 'publicationDate')
-        .set('_order', 'DESC')
-    };
-    
-    return this._http.get<Post[]>(`${environment.backendUri}/posts`, options);
-  }
+		const options = {
+			params: new HttpParams().set('_sort', 'publicationDate').set('_order', 'DESC')
+		};
 
-  getUserPosts(id: number): Observable<Post[]> {
+		return this._http.get<Post[]>(`${environment.backendUri}/posts`, options);
+	}
 
-    /*=========================================================================|
+	getUserPosts(id: number): Observable<Post[]> {
+		/*=========================================================================|
     | Red Path                                                                 |
     |==========================================================================|
     | Ahora mismo, esta función está obteniendo todos los posts existentes, y  |
@@ -63,12 +61,20 @@ export class PostService {
     | Una pista más, por si acaso: HttpParams.                                 |
     |=========================================================================*/
 
-     return this._http.get<Post[]>(`${environment.backendUri}/posts`);
-  }
+		const options = {
+			params: new HttpParams()
+				.set('publicationDate_lte', moment().format('x'))
+				.set('_sort', 'publicationDate')
+				.set('_order', 'DESC')
+				.set('author.id', `${id}`)
+			// Estos cuatro son parámetros del "json-server"
+		};
 
-  getCategoryPosts(id: number): Observable<Post[]> {
+		return this._http.get<Post>(`${environment.backendUri}/posts`, options);
+	}
 
-    /*=========================================================================|
+	getCategoryPosts(id: number): Observable<Post[]> {
+		/*=========================================================================|
     | Yellow Path                                                              |
     |==========================================================================|
     | Ahora mismo, esta función está obteniendo todos los posts existentes, y  |
@@ -96,16 +102,15 @@ export class PostService {
     | Una pista más, por si acaso: HttpParams.                                 |
     |=========================================================================*/
 
-     return this._http.get<Post[]>(`${environment.backendUri}/posts`);
-  }
+		return this._http.get<Post[]>(`${environment.backendUri}/posts`);
+	}
 
-  getPostDetails(id: number): Observable<Post> {
-    return this._http.get<Post>(`${environment.backendUri}/posts/${id}`);
-  }
+	getPostDetails(id: number): Observable<Post> {
+		return this._http.get<Post>(`${environment.backendUri}/posts/${id}`);
+	}
 
-  createPost(post: Post): Observable<Post> {
-
-    /*=========================================================================|
+	createPost(post: Post): Observable<Post> {
+		/*=========================================================================|
     | Purple Path                                                              |
     |==========================================================================|
     | Utiliza el cliente HTTP para guardar en servidor el post indicado. La    |
@@ -115,7 +120,6 @@ export class PostService {
     | inserción.                                                               |
     |=========================================================================*/
 
-    return null;
-  }
-
+		return null;
+	}
 }

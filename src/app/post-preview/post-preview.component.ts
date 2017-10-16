@@ -4,16 +4,15 @@ import { Post } from '../post';
 import { User } from '../user';
 
 @Component({
-  selector: 'app-post-preview',
-  templateUrl: './post-preview.component.html',
-  styleUrls: ['./post-preview.component.css']
+	selector: 'app-post-preview',
+	templateUrl: './post-preview.component.html',
+	styleUrls: [ './post-preview.component.css' ]
 })
 export class PostPreviewComponent {
- 
-  // Se expone el atributo para que 
-  // un compon. padre pueda enlazar datos al hijo 
-  @Input() post: Post;    
-  /*=========================================================================|
+	// Se expone el atributo para que
+	// un compon. padre pueda enlazar datos al hijo
+	@Input() post: Post;
+	/*=========================================================================|
   | Red Path                                                                 |
   |==========================================================================|
   | Expón un atributo de salida con el decorador correspondiente. El tipo de |
@@ -22,8 +21,12 @@ export class PostPreviewComponent {
   | dicho clic se realiza en el template de este componente, necesitas,      |
   | además, un manejador para el mismo.                                      |
   |=========================================================================*/
-
-  /*=========================================================================|
+	@Output() pulsacionEnAutor = new EventEmitter<Post>();
+  
+  filterByAuthor(post: Post): void {
+    this.pulsacionEnAutor.emit(post.author);
+  }
+	/*=========================================================================|
   | Green Path                                                               |
   |==========================================================================|
   | Expón un atributo de salida con el decorador correspondiente. El tipo de |
@@ -33,15 +36,14 @@ export class PostPreviewComponent {
   | además, un manejador para el mismo.                                      |
   |=========================================================================*/
 
-  @Output() pulsacionEnResumen = new EventEmitter<Post>(); 
-  
-  verDetalle(post: Post): void {
-    this.pulsacionEnResumen.emit(post.id);
-    console.log('Emitted an event with:', post.id);
-  }
+	@Output() pulsacionEnResumen = new EventEmitter<Post>();
 
-  plainTextToHtml(text: string): string {
-    return text ? `<p>${text.replace(/\n/gi, '</p><p>')}</p>` : '';
-  }
+	verDetalle(post: Post): void {
+		this.pulsacionEnResumen.emit(post.id);
+		console.log('Emitted an event with:', post.id);
+	}
 
+	plainTextToHtml(text: string): string {
+		return text ? `<p>${text.replace(/\n/gi, '</p><p>')}</p>` : '';
+	}
 }

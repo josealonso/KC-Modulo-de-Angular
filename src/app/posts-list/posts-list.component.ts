@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Post } from '../post';
+import { User } from '../user';
 
 @Component({
 	selector: 'app-posts-list',
@@ -32,6 +33,11 @@ export class PostsListComponent implements OnInit {
   getPost(postId: number): void { 
     console.log(`Soy el padre y la ruta será /posts/${postId}`);
     this.router.navigate(['/posts', postId]);
+  }
+  getPostsByAuthor(postsAuthor: User): void {
+    this.router.navigate(['/posts/users', postsAuthor.id]);
+    console.log('/posts/users', postsAuthor);
+    console.log('/posts/users/' + postsAuthor.id);
   }
 	/*=========================================================================|
   | Green Path                                                               |

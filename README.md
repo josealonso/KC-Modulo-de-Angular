@@ -1,3 +1,10 @@
+
+# KC-Modulo-de-Angular
+
+Consta de seis ejercicios obligatorios y de cuatro opcionales.
+
+------------------------------------------------------------------
+
 # angular4-web-test-directions
 
 **Postium** es un _amago_ de clon de [Medium](https://medium.com/). Sus pretensiones son mucho más humildes que las del conocido portal, pero a la vez contribuyen a una grandiosa causa: que aprendas a familiarizarte con Angular.
@@ -32,7 +39,7 @@ Hagas o no los **Optional Paths**, puedas terminar o no los obligatorios, te gus
 
 Aprovecho este momento para contarte un poco sobre las entidades. Son estas tres: `Post`, `User` y `Category`. Como puedes imaginar, la entidad `Post` es la que más peso tiene y sobre la que gira **Postium**. Tiene todos los atributos necesarios para almacenar los datos propios de un post, además de mantener relación con `User` para establecer el autor del mismo y con `Category` para enlazar las categorías en las que se publica. Están definidas de la siguiente forma:
 
-Entidad `Post`:
+Entidad `Post`: 
 
 - `id` de tipo `number`.
 - `title` de tipo `string`.
@@ -152,7 +159,7 @@ Dependencias:
 
 Documentos:
 
-- src/app/post-details/**post-details.component.html**
+- src/app/post-details/**post-details.component.html** 
 - src/app/post-details/**post-details.component.ts**
 - src/app/post-preview/**post-preview.component.html**
 - src/app/post-preview/**post-preview.component.ts**

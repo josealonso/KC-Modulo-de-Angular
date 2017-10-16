@@ -13,7 +13,8 @@
 | en él para notificar los clics sobre los posts.                          |
 |========================================================================-->
 
-<app-post-preview *ngFor="let post of posts" [post]="post"
+<app-post-preview *ngFor="let post of posts" [post]="post" 
+(pulsacionEnAutor)="getPostsByAuthor($event)"
 (pulsacionEnResumen)="getPost($event)"> <!-- [routerLink]="['/posts', 2]"> -->
 </app-post-preview> 
 <!-- (pulsacionEnResumen)=[routerLink]="['posts', 2]"> -->
