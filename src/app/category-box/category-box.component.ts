@@ -1,17 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Category } from '../category';
 
 @Component({
-  selector: 'app-category-box',
-  templateUrl: './category-box.component.html',
-  styleUrls: ['./category-box.component.css']
+	selector: 'app-category-box',
+	templateUrl: './category-box.component.html',
+	styleUrls: [ './category-box.component.css' ]
 })
 export class CategoryBoxComponent {
+	@Input() categories: Category[];
 
-  @Input() categories: Category[];
-
-  /*=========================================================================|
+	@Output() pulsacionEnCategoria = new EventEmitter<Category>();
+	/*=========================================================================|
   | Yellow Path                                                              |
   |==========================================================================|
   | Expón un atributo de salida con el decorador correspondiente. El tipo de |
@@ -21,4 +21,7 @@ export class CategoryBoxComponent {
   | además, un manejador para el mismo.                                      |
   |=========================================================================*/
 
+	sendCategory(category: Category): void {
+		this.pulsacionEnCategoria.emit(category);
+	}
 }

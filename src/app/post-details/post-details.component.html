@@ -20,7 +20,7 @@
       |========================================================================-->
       <span class="date">{{ post.publicationDate | FromNow }}</span>
 
-    </div>
+    </div> 
   </div>
 </div>
 <div class="post">
@@ -36,6 +36,7 @@
   | Suscribe el componente CategoryBoxComponent al evento que hayas definido |
   | en él para notificar los clics sobre las categorías del post.            |
   |========================================================================-->
-  <app-category-box [categories]="post.categories"></app-category-box>
+  <app-category-box [categories]="post.categories" (pulsacionEnCategoria)="getPostsByCategory($event)">
+  </app-category-box>
 
 </div>
