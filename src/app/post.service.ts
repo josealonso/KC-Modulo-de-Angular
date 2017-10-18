@@ -3,9 +3,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/Observer';
 
 import { environment } from '../environments/environment';
 import { Post } from './post';
+
+import { PostFormComponent } from './post-form/post-form.component';
 
 import * as moment from 'moment';
 import 'moment/locale/es';
@@ -13,7 +16,8 @@ import 'moment/locale/es';
 @Injectable()
 export class PostService {
 	constructor(private _http: HttpClient) {}
-
+	// private _postFormComponent : PostFormComponent) {}
+	// Error de ejecución --> No provider for PostFormComponent !
 	getPosts(): Observable<Post[]> {
 		/*=========================================================================|
     | Pink Path                                                                |
@@ -123,6 +127,7 @@ export class PostService {
 		return this._http.get<Post>(`${environment.backendUri}/posts/${id}`);
 	}
 
+
 	createPost(post: Post): Observable<Post> {
 		/*=========================================================================|
     | Purple Path                                                              |
@@ -134,6 +139,13 @@ export class PostService {
     | inserción.                                                               |
     |=========================================================================*/
 
-		return null;
+		//let observable$: Observable<Post> = Observable.create((observer: Observer<string>) => {});
+		console.log('Nueva publicación:', post.title);
+		console.log('Nueva publicación:', post.publicationDate);
+
+    return this._http.post<Post>(`${environment.backendUri}/posts`, post);
+		// .subscribe(this._postFormComponent.postSubmitted);
+		
+		// return this.getPosts();
 	}
 }

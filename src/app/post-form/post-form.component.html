@@ -3,8 +3,9 @@
 |==========================================================================|
 | Enlaza el submit del formulario con la función 'emitPostSubmitted()'.    |
 |========================================================================-->
-<form [formGroup]="postForm" novalidate>
-
+<form [formGroup]="postForm" #myForm="ngForm"
+(ngSubmit)="emitPostSubmitted()">
+ 
   <!--=======================================================================|
   | Purple Path                                                              |
   |==========================================================================|
@@ -12,8 +13,10 @@
   |========================================================================-->
   <input
     type="text"
-    placeholder="Título"
+    placeholder="Título" 
+    formControlName="title"
     class="u-full-width">
+   <span *ngIf="postForm.get('title').invalid">Campo obligatorio</span>
 
   <!--=======================================================================|
   | Purple Path                                                              |
@@ -22,8 +25,10 @@
   |========================================================================-->
   <textarea
     placeholder="Introduce tu historia"
+    formControlName="intro"
     class="u-full-width georgia-font"
     autogrow></textarea>
+    <span *ngIf="postForm.get('intro').invalid">Campo obligatorio</span>
 
   <!--=======================================================================|
   | Purple Path                                                              |
@@ -33,6 +38,7 @@
   <textarea
     placeholder="Cuenta tu historia"
     class="u-full-width georgia-font"
+    formControlName="body"
     autogrow></textarea>
 
   <!--=======================================================================|
@@ -42,6 +48,7 @@
   |========================================================================-->
   <button
     type="submit"
+    [disabled]="!myForm.form.valid"
     class="button-primary u-pull-right">Publicar</button>
 
 </form>
