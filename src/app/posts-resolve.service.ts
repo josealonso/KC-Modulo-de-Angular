@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, ActivatedRoute, Resolve } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
@@ -7,25 +7,16 @@ import { Post } from './post';
 import { PostService } from './post.service';
 
 @Injectable()
-export class PostsResolveService implements Resolve<Post[]>, OnInit {
+export class PostsResolveService implements Resolve<Post[]> {
 	constructor(private _postService: PostService) {}
 
-	ngOnInit(): void {
-		// Creo que no hace falta
-	}
-
 	resolve(route: ActivatedRouteSnapshot): Observable<Post[]> {
-		// ¿Por qué no se usa ActivatedRoute?
-		let x: number = 1;
-		console.log('HOLA-123456');
-		//if (x === x) {
 		if (route.url[0].path === 'posts' && route.url[1] ? route.url[1].path === 'users' : false) {
-			// if (route.url.includes(`users`)) {
 			let userId: string = route.url[2].path;
-			return this._postService.getUserPosts(route.params.userId); // El 4 es Hank Moody
+			return this._postService.getUserPosts(route.params.userId); 
 		}
 
-		/*=========================================================================|
+	/*=========================================================================|
     | Red Path                                                                 |
     |==========================================================================|
     | Modifica este Resolve para que, en caso de tener que obtener los posts   |
@@ -34,7 +25,7 @@ export class PostsResolveService implements Resolve<Post[]>, OnInit {
     | qué encuentras.                                                          |
     |=========================================================================*/
 
-		/*=========================================================================|
+	/*=========================================================================|
     | Yellow Path                                                              |
     |==========================================================================|
     | Modifica este Resolve para que, en caso de tener que obtener los posts   |
@@ -43,9 +34,10 @@ export class PostsResolveService implements Resolve<Post[]>, OnInit {
     | ver qué encuentras.                                                      |
     |=========================================================================*/
 
-		if (route.url[0].path === 'posts' && route.url[1] ? route.url[1].path === 'categories' : false) {
+		if (route.url[0].path === 'posts' && route.url[1] ? 
+		route.url[1].path === 'categories' : false) {
 			let categoryId: string = route.url[2].path;
-			return this._postService.getCategoryPosts(route.params.categoryId);
+			return this._postService.getCategoryPosts(parseInt(route.params.categoryId));
 		} else {
 			return this._postService.getPosts();
 		}

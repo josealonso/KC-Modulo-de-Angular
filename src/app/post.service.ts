@@ -3,10 +3,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/Observer';
 
 import { environment } from '../environments/environment';
 import { Post } from './post';
+import { Category } from './category';
 
 import { PostFormComponent } from './post-form/post-form.component';
 
@@ -16,8 +16,7 @@ import 'moment/locale/es';
 @Injectable()
 export class PostService {
 	constructor(private _http: HttpClient) {}
-	// private _postFormComponent : PostFormComponent) {}
-	// Error de ejecución --> No provider for PostFormComponent !
+
 	getPosts(): Observable<Post[]> {
 		/*=========================================================================|
     | Pink Path                                                                |
@@ -113,20 +112,21 @@ export class PostService {
 				.set('_order', 'DESC')
 		};
 
-		return this._http.get<Post[]>(`${environment.backendUri}/posts`, options).map((posts) => {
-			return posts.filter((posts) => {
-				return posts.categories.filter((categories) => {
-					console.log('Categ.:', categories.name);
-					return categories.id === id;
-				});
+		// let observable$: Observable<Post[]>;
+		// observable$ = this._http.get<Post[]>(`${environment.backendUri}/posts`, options)
+		return this._http.get<Post[]>(`${environment.backendUri}/posts`, options)
+    .map((posts: Post[]) => {
+			return posts.filter((post: Post): boolean => {
+				return post.categories.find((cat: Category): boolean => 
+        cat.id === id) !== undefined;
 			});
 		});
+
 	} // End of getCategoryPosts
 
 	getPostDetails(id: number): Observable<Post> {
 		return this._http.get<Post>(`${environment.backendUri}/posts/${id}`);
 	}
-
 
 	createPost(post: Post): Observable<Post> {
 		/*=========================================================================|
@@ -139,13 +139,8 @@ export class PostService {
     | inserción.                                                               |
     |=========================================================================*/
 
-		//let observable$: Observable<Post> = Observable.create((observer: Observer<string>) => {});
-		console.log('Nueva publicación:', post.title);
-		console.log('Nueva publicación:', post.publicationDate);
-
-    return this._http.post<Post>(`${environment.backendUri}/posts`, post);
+		return this._http.post<Post>(`${environment.backendUri}/posts`, post);
 		// .subscribe(this._postFormComponent.postSubmitted);
-		
-		// return this.getPosts();
+
 	}
 }

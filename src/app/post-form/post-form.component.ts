@@ -14,7 +14,7 @@ import { PostService } from '../post.service';
 export class PostFormComponent {
 	postForm: FormGroup;
 
-	// Los atributos son privados por defecto.
+	// Los atributos en TS son privados por defecto.
 	@Output() postSubmitted: EventEmitter<Post> = new EventEmitter();
 
 	constructor(
@@ -26,7 +26,7 @@ export class PostFormComponent {
 	}
  
 	private createForm() {
-		/*=========================================================================|
+	/*=========================================================================|
     | Purple Path                                                              |
     |==========================================================================|
     | Define para este FormGroup los objetos FormControl correspondientes a    |
@@ -49,7 +49,7 @@ export class PostFormComponent {
 		post.publicationDate = Date.now();
 		this.postSubmitted.emit(post);
 		this._postService.createPost(post);
-		this.postSubmitted.subscribe(function() {
+		this.postSubmitted.subscribe(function() { // Esta subscripción se debería hacer en el servicio
           this._postService.getPosts();
 		});
 	}
